@@ -488,13 +488,23 @@ Genere README el cual debe tener la siguiente informacion:
     realizado un pago mayor a 100.
 
     ```mysql
-    SELECT cli.nombre, cli.apellidos FROM cliente cli
+    SELECT cli.nombre, cli.apellidos, SUM(pa.total) AS totalGastado FROM cliente cli
     
     INNER JOIN pago pa ON pa.id_cliente = cli.id_cliente
     
-    WHERE pa.total > 100;
+    GROUP BY cli.id_cliente HAVING totalGastado > 100 ;
     
-    Empty set (0,00 sec)
+    | SERGIO      | STANFIELD    |       108.74 |
+    | MARION      | OCAMPO       |       115.71 |
+    | TRACY       | HERRMANN     |       129.72 |
+    | SETH        | HANNON       |       112.75 |
+    | KENT        | ARSENAULT    |       134.73 |
+    | TERRANCE    | ROUSH        |       111.71 |
+    | RENE        | MCALISTER    |       113.74 |
+    | EDUARDO     | HIATT        |       130.73 |
+    | TERRENCE    | GUNDERSON    |       117.70 |
+    +-------------+--------------+--------------+
+    395 rows in set (0,02 sec)
     
     ```
 
